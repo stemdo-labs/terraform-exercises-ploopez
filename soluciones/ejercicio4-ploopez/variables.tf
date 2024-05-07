@@ -40,7 +40,7 @@ variable "environment_tag" {
   description = "Entorno de la VNet (dev, test, prod, pre)"
   type        = string
   validation {
-    condition     = length(var.environment_tag) > 0 && can(regex("^(dev|pro|tes|pre)$", lower(var.environment_tag)))
+    condition     = length(var.environment_tag) > 0 && contains(["dev", "pro", "tes", "pre"], lower(var.environment_tag))
     error_message = "environment_tag no puede ser una cadena vacía y debe ser 'dev', 'pro', 'tes' o 'pre' (mayúsculas o minúsculas)"
   }
 }

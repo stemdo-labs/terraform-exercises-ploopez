@@ -94,4 +94,8 @@ load_balancer = {
     name             = "backend_pool_name"
     load_balancer_id = "load_balancer_id"
   }
+  backend_address_pool = {
+    name             = "backend_pool_name"
+    load_balancer_id = "load_balancer_id"
+  }
 }

@@ -69,15 +69,7 @@ variable "network_interface" {
   }))
 }
 
-variable "nic_ip_name" {
-  type = string
-  default = "ipconfig"
-}
 
-variable "nic_ip_private_ip_address_allocation" {
-  type = string
-  default = "Dynamic"
-}
 
 # Máquinas virtuales Linux
 variable "linux_virtual_machine" {

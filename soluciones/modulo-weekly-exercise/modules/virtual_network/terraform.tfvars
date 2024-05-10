@@ -22,14 +22,22 @@ subnets = {
 # }
 
 network_interface = {
-  "subnet1" = {
+  "linux_vm1" = {
     ip_configuration = {
       name                          = "ipconfig1"
       private_ip_address_allocation = "Dynamic"
       public_ip_address_id          = null
     }
+  },
+  "linux_vm2" = {
+    ip_configuration = {
+      name                          = "ipconfig2"
+      private_ip_address_allocation = "Dynamic"
+      public_ip_address_id          = null
+    }
   }
 }
+
 
 linux_virtual_machine = {
   "linux_vm1" = {
@@ -50,5 +58,24 @@ linux_virtual_machine = {
       sku       = "22_04-lts"
       version   = "latest"
     }
-  }
+  },
+    "linux_vm2" = {
+        computer_name       = "Linux2"
+        name                = "linux_vm2"
+        resource_group_name = "rg1plopez-lab01"
+        location            = "West Europe"
+        size                = "Standard_F2"
+        admin_username      = "adminuser"
+        admin_password      = "A1b#c2"
+        os_disk = {
+        caching              = "ReadWrite"
+        storage_account_type = "Standard_LRS"
+        }
+        source_image_reference = {
+        publisher = "Canonical"
+        offer     = "0001-com-ubuntu-server-jammy"
+        sku       = "22_04-lts"
+        version   = "latest"
+        }
+    }
 }

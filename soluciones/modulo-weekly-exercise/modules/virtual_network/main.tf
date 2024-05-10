@@ -50,30 +50,6 @@ resource "azurerm_network_interface" "netint" {
   }
 }
 
-# resource "azurerm_linux_virtual_machine" "linux_virtual_machine" {
-#   computer_name = var.linux_virtual_machine["linux_vm1"].computer_name
-#   name                = var.linux_virtual_machine["linux_vm1"].name
-#   resource_group_name = var.linux_virtual_machine["linux_vm1"].resource_group_name
-#   location            = var.location
-#   size                = var.linux_virtual_machine["linux_vm1"].size
-#   admin_username      = "adminuser"
-#   admin_password      = "A1b#c2"
-#   disable_password_authentication = false
-#   network_interface_ids = [azurerm_network_interface.netint["subnet1"].id]
-
-#   os_disk {
-#     caching              = var.linux_virtual_machine["linux_vm1"].os_disk.caching
-#     storage_account_type = var.linux_virtual_machine["linux_vm1"].os_disk.storage_account_type
-#   }
-
-#   source_image_reference {
-#     publisher = var.linux_virtual_machine["linux_vm1"].source_image_reference.publisher
-#     offer     = var.linux_virtual_machine["linux_vm1"].source_image_reference.offer
-#     sku       = var.linux_virtual_machine["linux_vm1"].source_image_reference.sku
-#     version   = var.linux_virtual_machine["linux_vm1"].source_image_reference.version
-#   }
-# }
-
 resource "azurerm_linux_virtual_machine" "linux_virtual_machine" {
   for_each = var.linux_virtual_machine
 
@@ -97,4 +73,22 @@ resource "azurerm_linux_virtual_machine" "linux_virtual_machine" {
     sku       = each.value.source_image_reference.sku
     version   = each.value.source_image_reference.version
   }
+}
+
+resource "azurerm_lb" "load_balancer" {
+  name = var.load_balancer.name
+  location = var.location
+  resource_group_name = var.resource_group_name
+  sku = var.load_balancer.sku
+
+  frontend_ip_configuration {
+    name = var.load_balancer.frontend_ip_configuration.name
+    subnet_id = azurerm_subnet.subnets["subnet1"].id
+    private_ip_address_allocation = var.load_balancer.frontend_ip_configuration.private_ip_address_allocation
+  }
+}
+
+resource "azurerm_lb_backend_address_pool" "load_balancer_backend_address_pool" {
+  loadbalancer_id      = azurerm_lb.load_balancer.id
+  name                 = var.load_balancer.backend_address_pool.name
 }

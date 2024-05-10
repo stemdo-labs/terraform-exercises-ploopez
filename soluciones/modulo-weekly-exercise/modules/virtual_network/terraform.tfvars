@@ -79,3 +79,19 @@ linux_virtual_machine = {
         }
     }
 }
+
+load_balancer = {
+  name                 = "lb1"
+  sku                  = "Standard"
+  resource_group_name  = "rg1plopez-lab01"
+  location             = "West Europe"
+  frontend_ip_configuration = {
+    name                           = "frontend_ip_configuration"
+    private_ip_address_allocation  = "Dynamic"
+    public_ip_address_id           = "public_ip_address_id"
+  }
+  backend_address_pool = {
+    name             = "backend_pool_name"
+    load_balancer_id = "load_balancer_id"
+  }
+}

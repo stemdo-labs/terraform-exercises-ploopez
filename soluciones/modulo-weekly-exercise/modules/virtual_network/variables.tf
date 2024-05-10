@@ -95,3 +95,21 @@ variable "linux_virtual_machine" {
     }))
   
 }
+
+variable "load_balancer" {
+    description = "Load Balancer"
+    type = map(object({
+        name                 = string
+        resource_group_name  = string
+        location             = string
+        frontend_ip_configuration = object({
+            name                 = string
+            public_ip_address_id = string
+        })
+
+        backend_address_pool = object({
+            name = string
+            load_balancer_id = string
+        })
+        }))
+}

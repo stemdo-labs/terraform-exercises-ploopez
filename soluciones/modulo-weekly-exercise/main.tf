@@ -92,3 +92,11 @@ resource "azurerm_lb_backend_address_pool" "load_balancer_backend_address_pool" 
   loadbalancer_id      = azurerm_lb.load_balancer.id
   name                 = var.load_balancer.backend_address_pool.name
 }
+
+resource "azurerm_network_interface_backend_address_pool_association" "association" {
+  for_each = azurerm_network_interface.netint
+
+  network_interface_id    = each.value.id
+  ip_configuration_name   = each.value.ip_configuration[0].name
+  backend_address_pool_id = azurerm_lb_backend_address_pool.load_balancer_backend_address_pool.id
+}
